@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+  <HEAD>
+    <meta charset="utf-8">
+    <TITLE>Spiral Galaxies Font</TITLE>
+    <SCRIPT TYPE="text/javascript" src="../../js/svg.min.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="font.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="spiralgalaxies.js"></SCRIPT>
+    <STYLE TYPE="text/css">
+      #warnings { background: red; color: yellow; padding: 1ex; display: none; }
+      @media print {
+        .noprint { display: none; }
+      }
+      /*td { text-align: center; }*/
+      textarea { vertical-align: middle; }
+
+      svg .grid rect, svg .edges polygon, svg .user line.true { stroke: black; stroke-width: 0.2; }
+      svg .user line.false { stroke: gray; stroke-width: 0.2; }
+      svg .user line { stroke-linecap: round; }
+      svg .grid rect { stroke: black; stroke-width: 0.2; fill: none; }
+      svg .grid line { stroke: #808080; stroke-width: 0.04; stroke-linecap: round; }
+      svg .centers circle { stroke: black; stroke-width: 0.1; }
+      /*svg .centers circle.w { fill: #cccccc; }*/
+      svg .centers circle.w { fill: white; }
+      svg .centers circle.b { fill: black; }
+      .puzzle svg .edges { opacity: 0; }
+      /*.puzzle svg .regions, .puzzle svg .edges { opacity: 0; }*/
+      svg .regions polygon.invalid { fill: red; }
+      svg .regions polygon.b { fill: #707070; }
+      svg .regions polygon.w { fill: #ffffff; }
+      svg .edges polygon { fill: none; }
+      svg .target { fill: purple; }
+      svg .target:hover { cursor: pointer; }
+
+/* from http://danielstern.ca/range.css/ */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 5px 0;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #c8c8c8;
+  border-radius: 1px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0.9px 0.9px 1px #000031, 0px 0px 0.9px #00004b;
+  border: 1px solid #00001e;
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  background: #80c4ff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5.2px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #e2e2e2;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #c8c8c8;
+  border-radius: 1px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0.9px 0.9px 1px #000031, 0px 0px 0.9px #00004b;
+  border: 1px solid #00001e;
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  background: #80c4ff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #afafaf;
+  border: 0.2px solid #010101;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #c8c8c8;
+  border: 0.2px solid #010101;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0.9px 0.9px 1px #000031, 0px 0px 0.9px #00004b;
+  border: 1px solid #00001e;
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  background: #80c4ff;
+  cursor: pointer;
+  height: 5px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #c8c8c8;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #e2e2e2;
+}
+
+    </STYLE>
+    <STYLE TYPE="text/css" ID="svgSize">
+      svg { width: 200px; }
+      .word + .word { margin-left: 100px; }
+    </STYLE>
+    <!--#include virtual="../../analytics.html"-->
+  </HEAD>
+  <BODY>
+    <TABLE WIDTH="100%">
+      <TR>
+        <TD STYLE="text-align: left; vertical-align: middle;">
+          <H1><A HREF="./">Spiral Galaxies Font</A></H1>
+        <TD STYLE="text-align: right; vertical-align: middle;">
+          <H2>by Walker&nbsp;Anderson, <A HREF="http://erikdemaine.org/">Erik&nbsp;Demaine</A>, and <A HREF="http://martindemaine.org">Martin&nbsp;Demaine</A>, 2018</H2>
+    </TABLE>
+
+    <P ID="warnings">
+    </P>
+
+    <TABLE id="data" WIDTH="100%" CLASS="noprint">
+      <TR>
+        <TD>
+          <LABEL FOR="text">Enter text to render:</LABEL> &nbsp;
+          <TEXTAREA NAME="text" ID="text" ROWS=4 COLS=40></TEXTAREA>
+        </TD>
+        <TD>
+          <INPUT ID="puzzle" TYPE="radio" NAME="font"><LABEL FOR="puzzle">Puzzle&nbsp;font</LABEL>
+          <BR>
+          <INPUT ID="solved" TYPE="radio" NAME="font"><LABEL FOR="solved">Solved&nbsp;font</LABEL>
+        </TD>
+        <TD>
+          <BUTTON ID="reset">Reset all puzzles</BUTTON>
+          <P>
+          <INPUT ID="connectors" TYPE="checkbox" NAME="connectors"><LABEL FOR="connectors">Enable third <BR> &ldquo;connected&rdquo; state</LABEL>
+
+        </TD>
+      </TR>
+    </TABLE>
+
+    <INPUT CLASS="noprint" TYPE="range" ID="size" MIN="16" MAX="600" VALUE="150" STYLE="width: 100%" TITLE="Size of characters">
+
+    <P>
+
+    <DIV id="output" STYLE="width: 100%">
+    </DIV>
+
+    <HR CLASS="noprint">
+
+    <P CLASS="noprint">
+    In a Spiral Galaxies puzzle, you are given a grid of unit squares and a
+    collection of <b>centers</b> (points, drawn as dots).  The goal is to
+    decompose the grid into regions called <b>galaxies</b>,
+    one containing each center, so that each galaxy is a polyomino
+    (an edge-to-edge joining of unit squares) and 180&deg; rotationally
+    symmetric about its center.
+
+    <P CLASS="noprint">
+    Spiral Galaxies or
+    <a href="http://nikoli.co.jp/en/puzzles/astronomical_show.html">Tentai Show (天体ショー in Japanese)</a>
+    is one of the many pencil-and-paper puzzles designed for the
+    Japanese puzzle magazine and publisher
+    <a href="http://nikoli.co.jp/en/"><i>Nikoli</i></a>,
+    Like most Nikoli puzzles,
+    <a href="http://www.stetson.edu/~efriedma/papers/spiral/spiral.html">Spiral Galaxies is NP-complete</a>,
+    meaning that there is no efficient algorithm to solve them,
+    assuming P&nbsp;&ne;&nbsp;NP.
+
+    <P CLASS="noprint">
+    This typeface features 36 uniquely solvable Spiral Galaxies puzzles,
+    one for each numeral and letter of the alphabet.
+    The <b>puzzle font</b> shows just the centers.
+    Like the Spiral Galaxies puzzles published by Nikoli,
+    the centers are drawn with dots of two different colors, black and white;
+    after solving the puzzle, the corresponding galaxy polyomino should be
+    filled the same color.  The black galaxies then form a letter or numeral.
+    The <b>solved font</b> illustrates these solutions.
+    See <a href="http://erikdemaine.org/papers/SpiralGalaxies_MOVES2017/">our paper</a> for details, including how we designed the typeface.
+
+    <P CLASS="noprint">
+    In the puzzle font, you can try your hand at solving the puzzles by
+    <b>clicking on grid edges</b> to toggle whether they are edges of the galaxy
+    (<b>black</b>).
+    If you <b>Enable third &ldquo;connected&rdquo; state</b>, then you
+    can click on an edge a second time to make it <b>gray</b> and perpendicular
+    to indicate that the two connected grid squares belong to the same galaxy.
+    (See Figure 3 of
+    <a href="http://erikdemaine.org/papers/SpiralGalaxies_MOVES2017/">our paper</a>.)
+    The galaxies will fill in when you solve the puzzle.
+    Click <b>Reset all puzzles</b> to start over.
+
+    <P CLASS="noprint">
+    Check out <A HREF="http://erikdemaine.org/fonts/">other mathematical and
+    puzzle fonts</A>. &bull; Feedback or not working?
+    <A HREF="mailto:edemaine+fonts@mit.edu">Email Erik</A>.
+  </BODY>
+</HTML>
