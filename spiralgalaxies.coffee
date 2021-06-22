@@ -135,10 +135,14 @@ checkRegionSymmetry = (region) ->
 class SpiralGalaxies
   constructor: (@svg, @width, @height, @centers, @solution, @regions) ->
     if @svg
+      @backgroundRect = @svg.rect @width, @height
+      .addClass 'background'
       @regionGroup = @svg.group()
       .addClass 'regions'
       @gridGroup = @svg.group()
       .addClass 'grid'
+      @outlineRect = @svg.rect @width, @height
+      .addClass 'outline'
       @centersGroup = @svg.group()
       .addClass 'centers'
       @edgesGroup = @svg.group()
@@ -159,15 +163,13 @@ class SpiralGalaxies
 
   sizeChange: ->
     return unless @svg?
+    @backgroundRect.size @width, @height
+    @outlineRect.size @width, @height
     @gridGroup.clear()
-    @gridGroup.rect @width, @height
-    .addClass 'background'
     for x in [0..@width]
       @gridGroup.line x, 0, x, @height
     for y in [0..@height]
       @gridGroup.line 0, y, @width, y
-    @gridGroup.rect @width, @height
-    .addClass 'outline'
 
     @svg.viewbox
       x: -edgeWidth/2
