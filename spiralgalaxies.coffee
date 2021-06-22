@@ -375,6 +375,12 @@ fontResize = ->
                                               # - circle width - border width
 
 fontGui = ->
+  ## Backward compatibility with old URL format
+  search = window.location.search
+  .replace /puzzle=1/g, 'font=puzzle'
+  .replace /solved=1/g, 'font=solved'
+  window.location.search = search unless window.location.search == search
+
   furls = new Furls()
   .addInputs()
   .removeInput 'size'
