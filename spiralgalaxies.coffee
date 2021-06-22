@@ -323,12 +323,7 @@ resize = (ids) ->
   for id in ids
     document.getElementById(id).style.height = "#{height}px"
 
-updateText = (changed) ->
-  state = @getState()
-  classes = []
-  classes.push 'connectors' if state.connectors
-  classes.push "font-#{state.font}"
-  document.getElementById('output').setAttribute 'class', classes.join ' '
+updateSize = ->
   size = document.getElementById('size').value
   while document.getElementById('svgSize').sheet.cssRules.length > 0
     document.getElementById('svgSize').sheet.deleteRule 0
@@ -336,7 +331,10 @@ updateText = (changed) ->
     "svg { width: #{0.9*size}px; margin: #{size*0.05}px; }", 0)
   document.getElementById('svgSize').sheet.insertRule(
     ".word + .word { margin-left: #{0.4*size}px; }", 1)
+
+updateText = (changed) ->
   return unless changed.force or changed.text or changed.font
+  state = @getState()
 
   Box =
     if state.font == 'puzzle'
@@ -379,8 +377,13 @@ fontResize = ->
 fontGui = ->
   furls = new Furls()
   .addInputs()
+  .removeInput 'size'
   .on 'stateChange', updateText
   .syncState()
+  .syncClass()
+
+  document.getElementById('size').addEventListener 'input', updateSize
+  updateSize()
 
   document.getElementById('reset').addEventListener 'click', ->
     furls.trigger 'stateChange', force: true
