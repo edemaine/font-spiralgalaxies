@@ -4,7 +4,8 @@
   "description": "",
   "main": "spiralgalaxies.js",
   "dependencies": {
-    "@svgdotjs/svg.js": "^3.1.0"
+    "@svgdotjs/svg.js": "^3.1.0",
+    "furls": "^0.4.1"
   },
   "devDependencies": {},
   "scripts": {

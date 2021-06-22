@@ -313,25 +313,6 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
     console.log 'SOLVED'
     true
 
-## Based on jolly.exe's code from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-getParameterByName = (name, search = location.search) ->
-  name = name.replace /[\[]/g, "\\["
-             .replace /[\]]/g, "\\]"
-  regex = new RegExp "[\\?&]#{name}=([^&#]*)"
-  results = regex.exec search
-  return null unless results?
-  decodeURIComponent results[1].replace /\+/g, " "
-
-## Based on meouw's answer on http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
-getOffset = (el) ->
-  x = y = 0
-  while el and not isNaN(el.offsetLeft) and not isNaN(el.offsetTop)
-    x += el.offsetLeft - el.scrollLeft
-    y += el.offsetTop - el.scrollTop
-    el = el.offsetParent
-  x: x
-  y: y
-
 ## FONT GUI
 
 resize = (ids) ->
@@ -340,33 +321,11 @@ resize = (ids) ->
   for id in ids
     document.getElementById(id).style.height = "#{height}px"
 
-radioButtons = [
-  options: ['puzzle', 'solved']
-  default: 'puzzle'
-]
-checkboxes = ['puzzle', 'solved', 'connectors']
-checkboxesRebuild = ['puzzle', 'solved']
-
-fontLoadState = ->
-  for checkbox in checkboxes
-    document.getElementById(checkbox).checked = getParameterByName checkbox
-  for radio in radioButtons
-    if (true for key in radio.options when document.getElementById(key).checked).length == 0
-      document.getElementById(radio.default).checked = true
-  text = getParameterByName('text') ? 'text'
-  document.getElementById('text').value = text
-  updateText false
-
-old = {}
-updateText = (setUrl = true, force = false) ->
-  params =
-    text: (document.getElementById('text').value
-           .replace(/\r\n/g, '\r').replace(/\r/g, '\n'))
+updateText = (changed) ->
+  state = @getState()
   classes = []
-  for checkbox in checkboxes
-    params[checkbox] = document.getElementById(checkbox).checked
-    if params[checkbox]
-      classes.push checkbox
+  classes.push 'connectors' if state.connectors
+  classes.push "font-#{state.font}"
   document.getElementById('output').setAttribute 'class', classes.join ' '
   size = document.getElementById('size').value
   while document.getElementById('svgSize').sheet.cssRules.length > 0
@@ -375,16 +334,10 @@ updateText = (setUrl = true, force = false) ->
     "svg { width: #{0.9*size}px; margin: #{size*0.05}px; }", 0)
   document.getElementById('svgSize').sheet.insertRule(
     ".word + .word { margin-left: #{0.4*size}px; }", 1)
-  checkParams =
-    text: params.text
-  for checkbox in checkboxesRebuild
-    checkParams[checkbox] = params[checkbox]
-  setState params if setUrl
-  return if (true for key of checkParams when checkParams[key] == old[key]).length == (key for key of checkParams).length and not force
-  old = checkParams
+  return unless changed.force or changed.text or changed.font
 
   Box =
-    if params['puzzle']
+    if state.font == 'puzzle'
       SpiralGalaxiesPuzzle
     else
       SpiralGalaxies
@@ -392,7 +345,7 @@ updateText = (setUrl = true, force = false) ->
   charBoxes = {}
   output = document.getElementById 'output'
   output.innerHTML = '' ## clear previous children
-  for line in params.text.split '\n'
+  for line in state.text.split '\n'
     output.appendChild outputLine = document.createElement 'p'
     outputLine.setAttribute 'class', 'line'
     outputLine.appendChild outputWord = document.createElement 'span'
@@ -416,39 +369,20 @@ updateText = (setUrl = true, force = false) ->
       else
         console.log "Unknown character '#{char}'"
 
-setState = (params) ->
-  encoded =
-    for key, value of params
-      if value == true
-        value = '1'
-      else if value == false or value == ''
-        continue
-      key + '=' + encodeURIComponent(value).replace /%20/g, '+'
-  history.replaceState null, 'text',
-    "#{document.location.pathname}?#{encoded.join '&'}"
-
 fontResize = ->
   document.getElementById('size').max =
     document.getElementById('size').scrollWidth - 30 - 2
                                               # - circle width - border width
 
 fontGui = ->
-  updateTextSoon = (event) ->
-    setTimeout updateText, 0
-    true
-  for event in ['input', 'propertychange', 'keyup']
-    document.getElementById('text').addEventListener event, updateTextSoon
-  for event in ['input', 'propertychange', 'click']
-    for checkbox in checkboxes
-      document.getElementById(checkbox).addEventListener event, updateTextSoon
-  for event in ['input', 'propertychange', 'click']
-    document.getElementById('size').addEventListener event, updateTextSoon
+  furls = new Furls()
+  .addInputs()
+  .on 'stateChange', updateText
+  .syncState()
 
   document.getElementById('reset').addEventListener 'click', ->
-    updateText false, true
+    furls.trigger 'stateChange', force: true
 
-  window.addEventListener 'popstate', fontLoadState
-  fontLoadState()
   window.addEventListener 'resize', fontResize
   fontResize()
 

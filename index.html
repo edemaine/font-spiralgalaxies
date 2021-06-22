@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <TITLE>Spiral Galaxies Font</TITLE>
     <SCRIPT TYPE="text/javascript" src="node_modules/@svgdotjs/svg.js/dist/svg.min.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="node_modules/furls/furls.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="font.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="spiralgalaxies.js"></SCRIPT>
     <STYLE TYPE="text/css">
@@ -27,8 +28,8 @@
       /*svg .centers circle.w { fill: #cccccc; }*/
       svg .centers circle.w { fill: white; }
       svg .centers circle.b { fill: black; }
-      .puzzle svg .edges { opacity: 0; }
-      /*.puzzle svg .regions, .puzzle svg .edges { opacity: 0; }*/
+      .font-puzzle svg .edges { opacity: 0; }
+      /*.font-puzzle svg .regions, .font-puzzle svg .edges { opacity: 0; }*/
       svg .regions polygon.invalid { fill: red; }
       svg .regions polygon.b { fill: #707070; }
       svg .regions polygon.w { fill: #ffffff; }
@@ -149,9 +150,9 @@ input[type=range]:focus::-ms-fill-upper {
           <TEXTAREA NAME="text" ID="text" ROWS=4 COLS=40></TEXTAREA>
         </TD>
         <TD>
-          <INPUT ID="puzzle" TYPE="radio" NAME="font"><LABEL FOR="puzzle">Puzzle&nbsp;font</LABEL>
+          <INPUT ID="puzzle" TYPE="radio" NAME="font" VALUE="puzzle"><LABEL FOR="puzzle">Puzzle&nbsp;font</LABEL>
           <BR>
-          <INPUT ID="solved" TYPE="radio" NAME="font"><LABEL FOR="solved">Solved&nbsp;font</LABEL>
+          <INPUT ID="solved" TYPE="radio" NAME="font" VALUE="solved"><LABEL FOR="solved">Solved&nbsp;font</LABEL>
         </TD>
         <TD>
           <BUTTON ID="reset">Reset all puzzles</BUTTON>
