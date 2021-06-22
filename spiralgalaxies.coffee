@@ -210,7 +210,6 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
     rt2o2 = Math.sqrt(2)/2
     @highlight = @svg.rect rt2o2, rt2o2
     .center 0, 0
-    .rotate 45
     .addClass 'target'
     .opacity 0
     event2coord = (e) =>
@@ -239,7 +238,10 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
     @svg.mousemove (e) =>
       edge = event2coord e
       if edge?
-        @highlight.translate edge...
+        @highlight
+        .transform
+          rotate: 45
+          translate: edge
         .opacity 0.333
       else
         @highlight.opacity 0
@@ -397,7 +399,7 @@ updateText = (setUrl = true, force = false) ->
       if char of window.font
         letter = window.font[char]
         parseCache[letter] ?= parseASCII letter
-        svg = SVG outputWord
+        svg = SVG().addTo outputWord
         box = new Box svg, parseCache[letter]...
         charBoxes[char] ?= []
         charBoxes[char].push box
