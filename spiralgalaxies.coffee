@@ -160,11 +160,14 @@ class SpiralGalaxies
   sizeChange: ->
     return unless @svg?
     @gridGroup.clear()
+    @gridGroup.rect @width, @height
+    .addClass 'background'
     for x in [0..@width]
       @gridGroup.line x, 0, x, @height
     for y in [0..@height]
       @gridGroup.line 0, y, @width, y
     @gridGroup.rect @width, @height
+    .addClass 'outline'
 
     @svg.viewbox
       x: -edgeWidth/2
