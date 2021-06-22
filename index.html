@@ -18,6 +18,8 @@
       /*td { text-align: center; }*/
       textarea { vertical-align: middle; }
 
+      .space { display: inline-block; }
+
       svg .grid rect, svg .edges polygon, svg .user line.true { stroke: black; stroke-width: 0.2; }
       svg .user line.false { stroke: gray; stroke-width: 0.2; }
       svg .user line { stroke-linecap: round; }
@@ -127,7 +129,7 @@ input[type=range]:focus::-ms-fill-upper {
     </STYLE>
     <STYLE TYPE="text/css" ID="svgSize">
       svg { width: 200px; }
-      .word + .word { margin-left: 100px; }
+      .space { padding-left: 100px; }
     </STYLE>
     <!--#include virtual="../../analytics.html"-->
   </HEAD>
@@ -158,7 +160,6 @@ input[type=range]:focus::-ms-fill-upper {
           <BUTTON ID="reset">Reset all puzzles</BUTTON>
           <P>
           <INPUT ID="connectors" TYPE="checkbox" NAME="connectors"><LABEL FOR="connectors">Enable third <BR> &ldquo;connected&rdquo; state</LABEL>
-
         </TD>
       </TR>
     </TABLE>

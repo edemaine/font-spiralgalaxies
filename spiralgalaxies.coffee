@@ -330,7 +330,7 @@ updateSize = ->
   document.getElementById('svgSize').sheet.insertRule(
     "svg { width: #{0.9*size}px; margin: #{size*0.05}px; }", 0)
   document.getElementById('svgSize').sheet.insertRule(
-    ".word + .word { margin-left: #{0.4*size}px; }", 1)
+    ".space { margin-left: #{0.4*size}px; }", 1)
 
 updateText = (changed) ->
   return unless changed.force or changed.text or changed.font
@@ -348,24 +348,19 @@ updateText = (changed) ->
   for line in state.text.split '\n'
     output.appendChild outputLine = document.createElement 'div'
     outputLine.setAttribute 'class', 'line'
-    outputLine.appendChild outputWord = document.createElement 'span'
-    outputWord.setAttribute 'class', 'word'
     for char, c in line
       char = char.toUpperCase()
       if char of window.font
         letter = window.font[char]
         parseCache[letter] ?= parseASCII letter
-        svg = SVG().addTo outputWord
+        svg = SVG().addTo outputLine
         box = new Box svg, parseCache[letter]...
         charBoxes[char] ?= []
         charBoxes[char].push box
         box.linked = charBoxes[char]
       else if char == ' '
-        #space = document.createElement 'span'
-        #space.setAttribute 'class', 'space'
-        #outputLine.appendChild space
-        outputLine.appendChild outputWord = document.createElement 'span'
-        outputWord.setAttribute 'class', 'word'
+        outputLine.appendChild space = document.createElement 'span'
+        space.setAttribute 'class', 'space'
       else
         console.log "Unknown character '#{char}'"
 
