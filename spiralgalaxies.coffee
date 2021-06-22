@@ -346,7 +346,7 @@ updateText = (changed) ->
   output = document.getElementById 'output'
   output.innerHTML = '' ## clear previous children
   for line in state.text.split '\n'
-    output.appendChild outputLine = document.createElement 'p'
+    output.appendChild outputLine = document.createElement 'div'
     outputLine.setAttribute 'class', 'line'
     outputLine.appendChild outputWord = document.createElement 'span'
     outputWord.setAttribute 'class', 'word'
