@@ -317,58 +317,6 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
 
 ## FONT GUI
 
-resize = (ids) ->
-  offset = getOffset document.getElementById ids[0]
-  height = Math.max 100, window.innerHeight - offset.y
-  for id in ids
-    document.getElementById(id).style.height = "#{height}px"
-
-updateSize = ->
-  size = document.getElementById('size').value
-  while document.getElementById('svgSize').sheet.cssRules.length > 0
-    document.getElementById('svgSize').sheet.deleteRule 0
-  document.getElementById('svgSize').sheet.insertRule(
-    "svg { width: #{0.9*size}px; margin: #{size*0.05}px; }", 0)
-  document.getElementById('svgSize').sheet.insertRule(
-    ".space { margin-left: #{0.4*size}px; }", 1)
-
-updateText = (changed) ->
-  return unless changed.force or changed.text or changed.font
-  state = @getState()
-
-  Box =
-    if state.font == 'puzzle'
-      SpiralGalaxiesPuzzle
-    else
-      SpiralGalaxies
-
-  charBoxes = {}
-  output = document.getElementById 'output'
-  output.innerHTML = '' ## clear previous children
-  for line in state.text.split '\n'
-    output.appendChild outputLine = document.createElement 'div'
-    outputLine.setAttribute 'class', 'line'
-    for char, c in line
-      char = char.toUpperCase()
-      if char of window.font
-        letter = window.font[char]
-        parseCache[letter] ?= parseASCII letter
-        svg = SVG().addTo outputLine
-        box = new Box svg, parseCache[letter]...
-        charBoxes[char] ?= []
-        charBoxes[char].push box
-        box.linked = charBoxes[char]
-      else if char == ' '
-        outputLine.appendChild space = document.createElement 'span'
-        space.setAttribute 'class', 'space'
-      else
-        console.log "Unknown character '#{char}'"
-
-fontResize = ->
-  document.getElementById('size').max =
-    document.getElementById('size').scrollWidth - 30 - 2
-                                              # - circle width - border width
-
 fontGui = ->
   ## Backward compatibility with old URL format
   search = window.location.search
@@ -376,21 +324,32 @@ fontGui = ->
   .replace /solved=1/g, 'font=solved'
   window.location.search = search unless window.location.search == search
 
-  furls = new Furls()
-  .addInputs()
-  .removeInput 'size'
-  .on 'stateChange', updateText
-  .syncState()
-  .syncClass()
-
-  document.getElementById('size').addEventListener 'input', updateSize
-  updateSize()
+  app = new FontWebappHTML
+    root: '#output'
+    sizeSlider: '#size'
+    charWidth: 150
+    charPadding: 5
+    charKern: 0
+    lineKern: 15
+    spaceWidth: 75
+    shouldRender: (changed) ->
+      changed.force or changed.text or changed.font
+    renderChar: (char, state, parent) ->
+      char = char.toUpperCase()
+      letter = window.font[char]
+      return unless letter?
+      parseCache[letter] ?= parseASCII letter
+      svg = SVG().addTo parent
+      if state.font == 'puzzle'
+        Box = SpiralGalaxiesPuzzle
+      else
+        Box = SpiralGalaxies
+      box = new Box svg, ...parseCache[letter]
+    linkIdenticalChars: (glyphs) ->
+      glyph.linked = glyphs for glyph in glyphs
 
   document.getElementById('reset').addEventListener 'click', ->
-    furls.trigger 'stateChange', force: true
-
-  window.addEventListener 'resize', fontResize
-  fontResize()
+    app.furls.trigger 'stateChange', force: true
 
 ## GUI MAIN
 

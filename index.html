@@ -8,6 +8,7 @@
     <TITLE>Spiral Galaxies Font</TITLE>
     <SCRIPT TYPE="text/javascript" src="node_modules/@svgdotjs/svg.js/dist/svg.min.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="node_modules/furls/furls.js"></SCRIPT>
+    <SCRIPT TYPE="text/javascript" src="node_modules/font-webapp/font-webapp.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="font.js"></SCRIPT>
     <SCRIPT TYPE="text/javascript" src="spiralgalaxies.js"></SCRIPT>
     <STYLE TYPE="text/css">
@@ -17,8 +18,6 @@
       }
       /*td { text-align: center; }*/
       textarea { vertical-align: middle; }
-
-      .space { display: inline-block; }
 
       svg .grid rect, svg .edges polygon, svg .user line.true { stroke: black; stroke-width: 0.2; }
       svg .user line.false { stroke: gray; stroke-width: 0.2; }
@@ -38,98 +37,6 @@
       svg .edges polygon { fill: none; }
       svg .target { fill: purple; }
       svg .target:hover { cursor: pointer; }
-
-/* from http://danielstern.ca/range.css/ */
-input[type=range] {
-  -webkit-appearance: none;
-  width: 100%;
-  margin: 5px 0;
-}
-input[type=range]:focus {
-  outline: none;
-}
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 5px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #c8c8c8;
-  border-radius: 1px;
-  border: 0.2px solid #010101;
-}
-input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0.9px 0.9px 1px #000031, 0px 0px 0.9px #00004b;
-  border: 1px solid #00001e;
-  height: 15px;
-  width: 15px;
-  border-radius: 15px;
-  background: #80c4ff;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -5.2px;
-}
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #e2e2e2;
-}
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 5px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #c8c8c8;
-  border-radius: 1px;
-  border: 0.2px solid #010101;
-}
-input[type=range]::-moz-range-thumb {
-  box-shadow: 0.9px 0.9px 1px #000031, 0px 0px 0.9px #00004b;
-  border: 1px solid #00001e;
-  height: 15px;
-  width: 15px;
-  border-radius: 15px;
-  background: #80c4ff;
-  cursor: pointer;
-}
-input[type=range]::-ms-track {
-  width: 100%;
-  height: 5px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-input[type=range]::-ms-fill-lower {
-  background: #afafaf;
-  border: 0.2px solid #010101;
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]::-ms-fill-upper {
-  background: #c8c8c8;
-  border: 0.2px solid #010101;
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]::-ms-thumb {
-  box-shadow: 0.9px 0.9px 1px #000031, 0px 0px 0.9px #00004b;
-  border: 1px solid #00001e;
-  height: 15px;
-  width: 15px;
-  border-radius: 15px;
-  background: #80c4ff;
-  cursor: pointer;
-  height: 5px;
-}
-input[type=range]:focus::-ms-fill-lower {
-  background: #c8c8c8;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #e2e2e2;
-}
-
-    </STYLE>
-    <STYLE TYPE="text/css" ID="svgSize">
-      svg { width: 200px; }
-      .space { padding-left: 100px; }
     </STYLE>
     <!--#include virtual="../../analytics.html"-->
   </HEAD>
@@ -164,7 +71,7 @@ input[type=range]:focus::-ms-fill-upper {
       </TR>
     </TABLE>
 
-    <INPUT CLASS="noprint" TYPE="range" ID="size" MIN="16" MAX="600" VALUE="150" STYLE="width: 100%" TITLE="Size of characters">
+    <div id="size" class="noprint"></div>
 
     <P>
 
