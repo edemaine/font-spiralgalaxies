@@ -5,7 +5,7 @@
   "main": "spiralgalaxies.js",
   "dependencies": {
     "@svgdotjs/svg.js": "^3.1.0",
-    "font-webapp": "^0.1.0",
+    "font-webapp": "^0.1.1",
     "furls": "^0.5.0"
   },
   "devDependencies": {},

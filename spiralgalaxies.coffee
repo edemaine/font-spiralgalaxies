@@ -333,7 +333,7 @@ fontGui = ->
     lineKern: 15
     spaceWidth: 75
     shouldRender: (changed) ->
-      changed.force or changed.text or changed.font
+      changed.text or changed.font
     renderChar: (char, state, parent) ->
       char = char.toUpperCase()
       letter = window.font[char]
@@ -349,7 +349,7 @@ fontGui = ->
       glyph.linked = glyphs for glyph in glyphs
 
   document.getElementById('reset').addEventListener 'click', ->
-    app.furls.trigger 'stateChange', force: true
+    app.render()
 
 ## GUI MAIN
 
