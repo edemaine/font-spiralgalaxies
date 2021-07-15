@@ -1,0 +1,152 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title Spiral Galaxies Font
+    script(type="text/javascript", src="node_modules/@svgdotjs/svg.js/dist/svg.min.js")
+    script(type="text/javascript", src="node_modules/furls/furls.js")
+    script(type="text/javascript", src="node_modules/font-webapp/font-webapp.js")
+    script(type="text/javascript", src="font.js")
+    script(type="text/javascript", src="spiralgalaxies.js")
+    style
+      :stylus
+        @media print
+          .noprint
+            display: none
+
+        .w-100
+          width: 100%
+        .text-left
+          text-align: left
+        .text-right
+          text-align: right
+        .align-middle
+          vertical-align: middle
+
+        svg
+          .grid rect, .edges polygon, .user line.true
+            stroke: black
+            stroke-width: 0.2
+          .user line.false
+            stroke: gray
+            stroke-width: 0.2
+          .user line
+            stroke-linecap: round
+          rect.background
+            fill: white
+            stroke: none
+          rect.outline
+            stroke: black
+            stroke-width: 0.2
+            fill: none
+          .grid line
+            stroke: #808080
+            stroke-width: 0.04
+            stroke-linecap: round
+          .centers circle
+            stroke: black
+            stroke-width: 0.1
+          // .centers circle.w { fill: #cccccc; }
+          .centers circle.w
+            fill: white
+          .centers circle.b
+            fill: black
+          /.font-puzzle & .edges
+            opacity: 0
+          // /.font-puzzle & .regions, .font-puzzle & .edges { opacity: 0; }
+          .regions polygon.invalid
+            fill: red
+          .regions polygon.b
+            fill: #707070
+          .regions polygon.w
+            fill: #ffffff
+          .edges polygon
+            fill: none
+          .target
+            fill: purple
+          .target:hover
+            cursor: pointer
+    //#include virtual="../../analytics.html"
+  body
+    table.w-100
+      tr
+        td.text-left.align-middle
+          h1 <a href="./">Spiral Galaxies Font</a>
+        td.text-right.align-middle
+          h2 by Walker&nbsp;Anderson, <a href="http://erikdemaine.org/">Erik&nbsp;Demaine</a>, and <a href="http://martindemaine.org">Martin&nbsp;Demaine</a>, 2018
+
+    table#data.w-100.noprint
+      tr
+        td
+          label(for="text") Enter text to render:
+          | &nbsp;
+          textarea.align-middle#text(name="text", rows=4, cols=40) text
+        td
+          input#puzzle(type="radio", name="font", value="puzzle", checked)
+          label(for="puzzle") Puzzle&nbsp;font
+          br
+          input#solved(type="radio", name="font", value="solved")
+          label(for="solved") Solved&nbsp;font
+        td
+          button#reset Reset all puzzles
+          p
+            input#connectors(type="checkbox", name="connectors")
+            label(for="connectors")
+              | Enable third
+              br
+              | &ldquo;connected&rdquo; state
+
+    #size.noprint
+
+    p
+
+    #output.w-100
+
+    hr.noprint
+
+    p.noprint.
+      In a Spiral Galaxies puzzle, you are given a grid of unit squares and a
+      collection of <b>centers</b> (points, drawn as dots).  The goal is to
+      decompose the grid into regions called <b>galaxies</b>,
+      one containing each center, so that each galaxy is a polyomino
+      (an edge-to-edge joining of unit squares) and 180&deg; rotationally
+      symmetric about its center.
+
+    p.noprint.
+      Spiral Galaxies or
+      <a href="http://nikoli.co.jp/en/puzzles/astronomical_show.html">Tentai Show (天体ショー in Japanese)</a>
+      is one of the many pencil-and-paper puzzles designed for the
+      Japanese puzzle magazine and publisher
+      <a href="http://nikoli.co.jp/en/"><i>Nikoli</i></a>,
+      Like most Nikoli puzzles,
+      <a href="http://www.stetson.edu/~efriedma/papers/spiral/spiral.html">Spiral Galaxies is NP-complete</a>,
+      meaning that there is no efficient algorithm to solve them,
+      assuming P&nbsp;&ne;&nbsp;NP.
+
+    p.noprint.
+      This typeface features 36 uniquely solvable Spiral Galaxies puzzles,
+      one for each numeral and letter of the alphabet.
+      The <b>puzzle font</b> shows just the centers.
+      Like the Spiral Galaxies puzzles published by Nikoli,
+      the centers are drawn with dots of two different colors, black and white;
+      after solving the puzzle, the corresponding galaxy polyomino should be
+      filled the same color.  The black galaxies then form a letter or numeral.
+      The <b>solved font</b> illustrates these solutions.
+      See <a href="http://erikdemaine.org/papers/SpiralGalaxies_MOVES2017/">our paper</a> for details, including how we designed the typeface.
+
+    p.noprint.
+      In the puzzle font, you can try your hand at solving the puzzles by
+      <b>clicking on grid edges</b> to toggle whether they are edges of the galaxy
+      (<b>black</b>).
+      If you <b>Enable third &ldquo;connected&rdquo; state</b>, then you
+      can click on an edge a second time to make it <b>gray</b> and perpendicular
+      to indicate that the two connected grid squares belong to the same galaxy.
+      (See Figure 3 of
+      <a href="http://erikdemaine.org/papers/SpiralGalaxies_MOVES2017/">our paper</a>.)
+      The galaxies will fill in when you solve the puzzle.
+      Click <b>Reset all puzzles</b> to start over.
+
+    p.noprint.
+      Check out <a href="http://erikdemaine.org/fonts/">other mathematical and
+      puzzle fonts</a>. &bull; Feedback or not working?
+      <A HREF="mailto:edemaine+fonts@mit.edu">Email Erik</A>.
