@@ -289,14 +289,9 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
       @lines[edge] = @userGroup.line p..., q...
       .attr 'class', @state[edge].toString()
     if solved = @solved()
-      unless @wasSolved
-        @regionGroup.opacity 0
-        @regionGroup.animate().opacity 1
+      @svg.addClass 'solved'
     else
-      if @wasSolved
-        @regionGroup.animate().opacity 0
-        .after => @regionGroup.opacity null
-    @wasSolved = solved
+      @svg.removeClass 'solved'
 
     if @linked? and links
       for link in @linked when link != @

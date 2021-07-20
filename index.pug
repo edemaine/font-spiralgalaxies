@@ -71,8 +71,9 @@ html
           /.font-solved &
             .user
               opacity: 0
-          /.solved &
+          &.solved
             .regions
+              transition: opacity 1s
               opacity: 1
     //#include virtual="../../analytics.html"
   body
