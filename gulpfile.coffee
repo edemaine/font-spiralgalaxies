@@ -25,4 +25,4 @@ exports.watch = watch = ->
   gulp.watch '*.pug', pug
   gulp.watch 'spiralgalaxies.coffee', coffee
 
-exports.default = pug
+exports.default = gulp.parallel coffee, pug

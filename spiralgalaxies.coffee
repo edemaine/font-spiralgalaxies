@@ -206,7 +206,6 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
     if @svg
       @userGroup = @svg.group()
       .addClass 'user'
-      @regionGroup.opacity 0
     @highlightEnable()
 
   highlightEnable: ->
@@ -289,12 +288,15 @@ class SpiralGalaxiesPuzzle extends SpiralGalaxies
       q = add edge, dir
       @lines[edge] = @userGroup.line p..., q...
       .attr 'class', @state[edge].toString()
-    if @solved()
-      unless @regionGroup.opacity() == 1
+    if solved = @solved()
+      unless @wasSolved
+        @regionGroup.opacity 0
         @regionGroup.animate().opacity 1
     else
-      unless @regionGroup.opacity() == 0
+      if @wasSolved
         @regionGroup.animate().opacity 0
+        .after => @regionGroup.opacity null
+    @wasSolved = solved
 
     if @linked? and links
       for link in @linked when link != @
@@ -333,18 +335,14 @@ fontGui = ->
     lineKern: 15
     spaceWidth: 75
     shouldRender: (changed) ->
-      changed.text or changed.font
+      changed.text
     renderChar: (char, state, parent) ->
       char = char.toUpperCase()
       letter = window.font[char]
       return unless letter?
       parseCache[letter] ?= parseASCII letter
       svg = SVG().addTo parent
-      if state.font == 'puzzle'
-        Box = SpiralGalaxiesPuzzle
-      else
-        Box = SpiralGalaxies
-      box = new Box svg, ...parseCache[letter]
+      box = new SpiralGalaxiesPuzzle svg, ...parseCache[letter]
     linkIdenticalChars: (glyphs) ->
       glyph.linked = glyphs for glyph in glyphs
 

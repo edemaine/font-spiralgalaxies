@@ -51,9 +51,6 @@ html
             fill: white
           .centers circle.b
             fill: black
-          /.font-puzzle & .edges
-            opacity: 0
-          // /.font-puzzle & .regions, .font-puzzle & .edges { opacity: 0; }
           .regions polygon.invalid
             fill: red
           .regions polygon.b
@@ -64,8 +61,19 @@ html
             fill: none
           .target
             fill: purple
-          .target:hover
             cursor: pointer
+            /.font-solved &
+              cursor: default
+              opacity: 0
+          /.font-puzzle &
+            .edges, .regions
+              opacity: 0
+          /.font-solved &
+            .user
+              opacity: 0
+          /.solved &
+            .regions
+              opacity: 1
     //#include virtual="../../analytics.html"
   body
     table.w-100
