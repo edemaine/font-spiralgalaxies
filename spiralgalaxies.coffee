@@ -335,9 +335,9 @@ fontGui = ->
       char = char.toUpperCase()
       letter = window.font[char]
       return unless letter?
-      parseCache[letter] ?= parseASCII letter
+      parseCache[char] ?= parseASCII letter
       svg = SVG().addTo parent
-      box = new SpiralGalaxiesPuzzle svg, ...parseCache[letter]
+      box = new SpiralGalaxiesPuzzle svg, ...parseCache[char]
     linkIdenticalChars: (glyphs) ->
       glyph.linked = glyphs for glyph in glyphs
 
